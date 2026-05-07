@@ -441,7 +441,7 @@ const projectLinks = {
 const projectUrl = (key) => {
   const link = projectLinks[key];
   if (!link) return "./index.html#selected";
-  return window.location.protocol === "file:" ? link.file : link.server;
+  return link.file;
 };
 
 const setText = (selector, text) => {
