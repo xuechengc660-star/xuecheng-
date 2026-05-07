@@ -421,20 +421,20 @@ const compactHeroQuery = window.matchMedia?.("(max-width: 1080px)");
 const chatApiEndpoint = window.PORTFOLIO_API_ENDPOINT || (window.location.protocol === "file:" ? "http://127.0.0.1:8787/api/chat" : "/api/chat");
 const projectLinks = {
   immersive: {
-    file: "./projects/garden/index.html",
-    server: "/project/garden/",
+    file: "./garden/index.html",
+    server: "/garden/",
   },
   prototype: {
-    file: "./projects/islesoul/index.html",
-    server: "/project/islesoul/",
+    file: "./islesoul/index.html",
+    server: "/islesoul/",
   },
   brand: {
-    file: "./projects/guanxia/index.html",
-    server: "/project/guanxia/",
+    file: "./guanxia/index.html",
+    server: "/guanxia/",
   },
   aigc: {
-    file: "./projects/ai-video/ai-video.html",
-    server: "/project/ai-video/",
+    file: "./ai-video.html",
+    server: "/ai-video.html",
   },
 };
 
