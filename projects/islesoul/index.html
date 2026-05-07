@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="IsleSoul 心屿情绪疗愈 APP 原型案例，展示三空间交互、AI 情绪对话、白噪音放松与触觉解压体验。">
+<title>IsleSoul 心屿 · 情绪疗愈三空间</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'PingFang SC','Noto Sans SC',sans-serif;background:#faf8f5;color:#1a1a1a;line-height:1.6;overflow-x:hidden}
+:root{--paper:#f5f0eb;--ink:#1a1a1a;--accent:#8b7355;--frost:#e8e0d8;--snow:#faf8f5;--serif:'Noto Serif SC',serif;--sans:'PingFang SC','Noto Sans SC',sans-serif;--nian:#e85a6e;--mian:#5a8ae8;--song:#e8a85a}
+
+/* 导航 */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:16px 5vw;background:rgba(250,248,245,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.04)}
+.top-bar .logo{font-size:18px;font-weight:600;color:var(--ink);text-decoration:none}
+.top-bar .back-link{font-size:14px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:4px;transition:opacity .2s}
+.top-bar .back-link:hover{opacity:.7}
+.page-nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+.page-nav a{display:block;width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,0.15);transition:all .3s;text-indent:-9999px;position:relative}
+.page-nav a:hover,.page-nav a.active{background:var(--accent);height:24px;border-radius:4px}
+.page-nav a:hover::after{content:attr(data-label);position:absolute;right:18px;top:50%;transform:translateY(-50%);text-indent:0;font-size:12px;color:var(--accent);white-space:nowrap;background:white;padding:2px 8px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+
+/* 通用布局 */
+section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 5vw 80px;scroll-margin-top:76px}
+.section-inner{max-width:1100px;width:100%}
+.section-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;font-weight:500}
+h2{font-size:36px;font-weight:700;line-height:1.2;margin-bottom:24px}
+h3{font-size:20px;font-weight:600;margin-bottom:12px}
+
+/* 入场动画 */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* Hero */
+#hero{position:relative;min-height:100vh;padding:0;overflow:hidden;background:#2a2220}
+.hero-bg{position:absolute;inset:0;background:url('assets/images/IsleSoul 心屿-海报.jpg') center/cover no-repeat;opacity:.85}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(42,34,32,0.6) 0%,rgba(42,34,32,0.2) 50%,rgba(42,34,32,0.4) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;color:white;padding:0 5vw}
+.hero-content h1{font-size:clamp(48px,8vw,96px);font-weight:700;letter-spacing:4px;margin-bottom:12px;text-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.hero-content .hero-sub{font-size:clamp(16px,2.5vw,24px);font-weight:300;letter-spacing:6px;opacity:.85;margin-bottom:32px}
+.hero-content .hero-tagline{font-size:clamp(14px,1.8vw,18px);opacity:.7;max-width:500px;margin:0 auto;line-height:1.8}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,0.5);font-size:12px;letter-spacing:2px;animation:scrollBounce 2s infinite}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* Overview */
+#overview{background:var(--snow)}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:40px}
+.overview-item{background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.overview-item .label{font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:6px;font-weight:500}
+.overview-item .value{font-size:14px;color:var(--ink);line-height:1.5}
+.overview-desc{font-size:16px;line-height:1.8;color:#555;max-width:700px}
+.research-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+.research-card{padding:18px;border-radius:16px;background:rgba(255,255,255,.78);border:1px solid rgba(120,98,76,.1);box-shadow:0 8px 24px rgba(88,78,68,.05)}
+.research-card span{display:block;font-size:11px;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.research-card strong{display:block;font-size:16px;color:var(--ink);margin-bottom:8px}
+.research-card p{font-size:13px;color:#667085;line-height:1.65}
+@media(max-width:768px){.research-strip{grid-template-columns:1fr}}
+
+/* Concept */
+#concept{background:var(--paper)}
+.concept-proposition{font-size:clamp(24px,3.5vw,36px);font-weight:300;line-height:1.5;color:var(--ink);margin-bottom:48px;max-width:700px;font-family:var(--serif);letter-spacing:2px;border-left:3px solid var(--accent);padding-left:24px}
+.concept-keywords{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.keyword-tag{padding:6px 18px;border-radius:100px;background:white;border:1px solid var(--frost);font-size:13px;color:var(--accent);transition:all .3s}
+.keyword-tag:hover{border-color:var(--accent);background:var(--accent);color:white}
+.concept-text{font-size:15px;line-height:1.9;color:#555;max-width:700px}
+
+/* System - 三空间卡片 */
+#system{background:var(--snow)}
+.system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
+.system-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);transition:transform .3s,box-shadow .3s}
+.system-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,0.1)}
+.system-card .phone-frame{position:relative;width:100%;aspect-ratio:390/844;overflow:hidden;background:#f0ebe4}
+.system-card .phone-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.system-card .phone-frame .frame-overlay{position:absolute;inset:0;border:6px solid #1a1a1a;border-radius:20px;pointer-events:none}
+.system-card .phone-frame .frame-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:24px;background:#1a1a1a;border-radius:0 0 12px 12px;pointer-events:none}
+.system-card .system-card-body{padding:20px 24px 24px}
+.system-card .system-card-body .space-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.system-card .system-card-body .space-header .space-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.system-card .system-card-body h4{font-size:18px;font-weight:600}
+.system-card .system-card-body .space-tag{display:inline-block;font-size:11px;padding:2px 10px;border-radius:100px;margin-bottom:12px;font-weight:500}
+.system-card .system-card-body p{font-size:13px;color:#666;line-height:1.7}
+.system-card.nian .space-dot{background:var(--nian)}
+.system-card.nian .space-tag{background:#fff0f0;color:var(--nian)}
+.system-card.mian .space-dot{background:var(--mian)}
+.system-card.mian .space-tag{background:#f0f4ff;color:var(--mian)}
+.system-card.song .space-dot{background:var(--song)}
+.system-card.song .space-tag{background:#fff8ee;color:var(--song)}
+
+/* 交互流程 */
+.system-flow{margin-top:60px;padding:48px;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(249,251,255,.86));border:1px solid rgba(185,196,230,.38);border-radius:28px;box-shadow:0 28px 80px rgba(86,96,126,.12);position:relative;overflow:hidden}
+.system-flow::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#ff8a9e,#8aa7ff,#ffc36a)}
+.system-flow::after{content:'';position:absolute;inset:auto -8% -34% -8%;height:240px;background:radial-gradient(circle at 15% 42%,rgba(232,90,110,.16),transparent 26%),radial-gradient(circle at 82% 30%,rgba(232,168,90,.15),transparent 28%),repeating-linear-gradient(8deg,rgba(232,90,110,.045) 0 1px,transparent 1px 9px);pointer-events:none}
+.flow-header{position:relative;z-index:1;text-align:center;margin-bottom:42px}
+.flow-header h3{font-size:30px;margin:0;color:#10192f;letter-spacing:1px}
+.flow-header small{position:absolute;right:0;top:4px;color:#9aa3ba;font-size:13px;font-weight:600}
+.flow-header::after{content:'';display:block;width:64px;height:6px;margin:16px auto 0;border-radius:999px;background:linear-gradient(90deg,#ff9eb1,#8ea7ff)}
+.flow-diagram{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:34px;align-items:start}
+.flow-step{position:relative;border:0;background:transparent;text-align:center;cursor:pointer;color:#10192f;padding:0 4px;font-family:inherit}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-26px;top:58px;color:#e8bdc5;font-size:32px;font-weight:300}
+.flow-step[data-flow-step="mian"]::after,.flow-step[data-flow-step="nian"]::after{content:'↕';color:#c4b5fd}
+.flow-orb{width:116px;height:116px;margin:0 auto 22px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 26% 24%,rgba(255,255,255,.94),rgba(255,255,255,.34) 28%,rgba(255,255,255,.06) 56%),linear-gradient(135deg,var(--orb-a),var(--orb-b));box-shadow:inset 0 0 0 12px rgba(255,255,255,.45),0 18px 44px var(--orb-shadow);transition:transform .25s,box-shadow .25s}
+.flow-orb img{width:118%;height:118%;object-fit:contain;display:block;filter:drop-shadow(0 10px 22px var(--orb-shadow));pointer-events:none}
+.flow-step:hover .flow-orb,.flow-step:focus-visible .flow-orb,.flow-step.active .flow-orb{transform:translateY(-6px) scale(1.04);box-shadow:inset 0 0 0 12px rgba(255,255,255,.5),0 24px 56px var(--orb-shadow)}
+.flow-step strong{display:block;font-size:20px;line-height:1.2;margin-bottom:8px}
+.flow-step span{display:block;color:#8a92a8;font-size:14px}
+.flow-icon-mark{font-size:46px;line-height:1;color:white;text-shadow:0 3px 12px rgba(0,0,0,.12)}
+.flow-step[data-flow-step="enter"]{--orb-a:#e9ddcf;--orb-b:#f9f5ec;--orb-shadow:rgba(139,115,85,.18)}
+.flow-step[data-flow-step="nian"]{--orb-a:#fff2f0;--orb-b:#ffe4d0;--orb-shadow:rgba(232,90,110,.26)}
+.flow-step[data-flow-step="mian"]{--orb-a:#eef6ff;--orb-b:#e8f1ff;--orb-shadow:rgba(90,138,232,.26)}
+.flow-step[data-flow-step="song"]{--orb-a:#fff8da;--orb-b:#fff1ae;--orb-shadow:rgba(232,168,90,.24)}
+.flow-branches{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:56px}
+.flow-branch{min-height:126px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;text-align:left;padding:22px 24px;border-radius:20px;background:rgba(255,255,255,.72);border:1px solid var(--branch-border);box-shadow:0 10px 30px rgba(83,91,130,.08);cursor:pointer;transition:transform .22s,border-color .22s,box-shadow .22s;font-family:inherit}
+.flow-branch:hover,.flow-branch:focus-visible,.flow-branch.active{transform:translateY(-4px);border-color:var(--branch-active);box-shadow:0 18px 46px rgba(83,91,130,.13)}
+.branch-icon{width:62px;height:62px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.92),var(--branch-bg));box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 10px 26px rgba(0,0,0,.07);font-size:28px;color:var(--branch-active)}
+.flow-branch[data-flow-branch="scan"]{--branch-border:#ffd5dd;--branch-active:#e85a6e;--branch-bg:#ffecef}
+.flow-branch[data-flow-branch="swipe"]{--branch-border:#dfe5ff;--branch-active:#6d83ff;--branch-bg:#eef2ff}
+.flow-branch[data-flow-branch="recommend"]{--branch-border:#ffe2b7;--branch-active:#e8a85a;--branch-bg:#fff5df}
+.branch-name{font-size:18px;font-weight:700;color:#10192f;margin-bottom:4px}
+.branch-action{font-size:14px;color:#8a92a8}
+.flow-detail{position:relative;z-index:1;margin-top:28px;padding:20px 24px;border-radius:18px;background:rgba(16,25,47,.86);color:white;box-shadow:0 18px 50px rgba(16,25,47,.16)}
+.flow-detail p:first-child{font-size:12px;letter-spacing:2px;color:#c8d1ff;text-transform:uppercase;margin-bottom:6px}
+.flow-detail h4{font-size:22px;margin:0 0 8px}
+.flow-detail p:last-child{color:rgba(255,255,255,.72);font-size:14px;line-height:1.7}
+@media(max-width:900px){.system-flow{padding:34px 22px}.flow-header small{position:static;display:block;margin-top:8px}.flow-diagram{grid-template-columns:1fr;gap:20px}.flow-step{display:grid;grid-template-columns:86px 1fr;text-align:left;align-items:center;gap:4px 16px;padding:12px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(0,0,0,.04)}.flow-step:not(:last-child)::after{content:'↓';left:42px;right:auto;top:auto;bottom:-26px;font-size:24px}.flow-orb{width:76px;height:76px;margin:0;grid-row:1/3}.flow-step strong,.flow-step span{grid-column:2}.flow-icon-mark{font-size:32px}.flow-branches{grid-template-columns:1fr;margin-top:40px}.flow-branch{min-height:104px}}
+
+@media(max-width:768px){
+  #system{padding-top:64px}
+  #system .section-inner{overflow:hidden}
+  .system-grid{display:flex;gap:14px;margin:24px -5vw 0;padding:2px 5vw 12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.system-grid::-webkit-scrollbar{display:none}
+  .system-card{flex:0 0 min(78vw,320px);scroll-snap-align:center;border-radius:18px}
+  .system-card:hover{transform:none}
+  .system-card .phone-frame{aspect-ratio:390/620;max-height:390px;background:linear-gradient(180deg,#fbf8f5,#edf4ff)}
+  .system-card .phone-frame img{object-fit:contain;object-position:center}
+  .system-card .phone-frame .frame-overlay{border-width:4px;border-radius:18px}
+  .system-card .phone-frame .frame-notch{width:86px;height:16px;border-radius:0 0 10px 10px}
+  .system-card .system-card-body{padding:16px 18px 18px}
+  .system-card .system-card-body h4{font-size:17px}
+  .system-card .system-card-body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;line-height:1.6}
+  .system-flow{margin-top:32px;padding:28px 18px;border-radius:22px}
+  .flow-header{margin-bottom:24px}
+  .flow-header h3{font-size:26px}
+  .flow-header small{font-size:12px}
+  .flow-header::after{margin-top:12px}
+  .flow-diagram{display:flex;grid-template-columns:none;gap:12px;margin:0 -18px;padding:0 18px 10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .flow-diagram,.flow-branches{scrollbar-width:thin;scrollbar-color:rgba(16,25,47,.28) transparent}
+  .flow-diagram::-webkit-scrollbar,.flow-branches::-webkit-scrollbar{height:4px}
+  .flow-diagram::-webkit-scrollbar-thumb,.flow-branches::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(16,25,47,.24)}
+  .flow-step{display:block;flex:0 0 min(68vw,260px);text-align:center;padding:16px 12px;scroll-snap-align:start;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid rgba(0,0,0,.04)}
+  .flow-step:not(:last-child)::after,.flow-step[data-flow-step="mian"]::after,.flow-step[data-flow-step="nian"]::after{content:''}
+  .flow-orb{width:74px;height:74px;margin:0 auto 12px;grid-row:auto}
+  .flow-step strong,.flow-step span{grid-column:auto}
+  .flow-step strong{font-size:17px}
+  .flow-step span{font-size:12px}
+  .flow-icon-mark{font-size:30px}
+  .flow-branches{display:flex;grid-template-columns:none;gap:12px;margin:18px -18px 0;padding:0 18px 10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .flow-branch{flex:0 0 min(74vw,280px);min-height:88px;padding:16px;gap:12px;scroll-snap-align:start}
+  .branch-icon{width:50px;height:50px;font-size:22px}
+  .branch-name{font-size:16px}
+  .branch-action{font-size:12px}
+  .flow-detail{margin-top:16px;padding:16px 18px;border-radius:16px}
+  .flow-detail h4{font-size:20px}
+  .flow-detail p:last-child{font-size:13px;line-height:1.55}
+}
+
+/* Process */
+#process{background:linear-gradient(180deg,var(--paper),#f8f6f2)}
+.process-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:28px;margin-top:32px;align-items:start}
+.process-steps{display:grid;gap:16px}
+.process-step{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px;border-radius:20px;background:rgba(255,255,255,.78);border:1px solid rgba(120,98,76,.12);box-shadow:0 12px 36px rgba(88,78,68,.07)}
+.process-step .step-num{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--accent);font-size:13px;font-weight:700;font-family:var(--serif);box-shadow:inset 0 0 0 1px rgba(120,98,76,.12)}
+.step-kicker{display:block;font-size:11px;letter-spacing:1.5px;color:#9a8d7c;text-transform:uppercase;margin-bottom:6px;font-weight:700}
+.process-step .step-content h4{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+.process-step .step-content p{font-size:14px;color:#5d6572;line-height:1.75}
+.step-output{display:inline-flex;margin-top:12px;padding:6px 12px;border-radius:999px;background:#f4efe8;color:#8a6f4d;font-size:12px;font-weight:700}
+.process-toggle{display:none}
+.process-proof{position:sticky;top:96px;border-radius:24px;padding:26px;background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(237,242,255,.78));border:1px solid rgba(137,152,190,.2);box-shadow:0 24px 70px rgba(92,99,122,.12);overflow:hidden}
+.process-proof::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 86% 8%,rgba(112,151,255,.18),transparent 28%),radial-gradient(circle at 12% 88%,rgba(255,126,150,.16),transparent 30%);pointer-events:none}
+.proof-header,.proof-orbs,.proof-checklist{position:relative;z-index:1}
+.proof-header span{display:block;font-size:11px;letter-spacing:1.8px;color:#8b97ad;text-transform:uppercase;font-weight:800;margin-bottom:8px}
+.proof-header h3{font-size:26px;line-height:1.25;margin-bottom:10px;color:#10192f}
+.proof-header p{font-size:13px;color:#667085;line-height:1.7}
+.proof-orbs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.proof-orbs figure{margin:0;text-align:center}
+.proof-orbs img{width:100%;max-width:112px;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 16px 24px rgba(75,93,125,.18))}
+.proof-orbs figcaption{font-size:14px;font-weight:800;color:#10192f;line-height:1.35}
+.proof-orbs small{font-size:11px;color:#7e8798;font-weight:600}
+.proof-checklist{display:grid;gap:10px}
+.proof-checklist div{padding:13px 14px;border-radius:14px;background:rgba(255,255,255,.7);border:1px solid rgba(94,107,139,.1)}
+.proof-checklist strong{display:block;font-size:13px;color:#10192f;margin-bottom:4px}
+.proof-checklist span{display:block;font-size:12px;color:#6b7280;line-height:1.55}
+@media(max-width:900px){.process-layout{grid-template-columns:1fr}.process-proof{position:relative;top:auto}.process-step{grid-template-columns:44px 1fr;padding:18px}.process-step .step-content h4{font-size:16px}}
+@media(max-width:600px){.process-proof{padding:20px;border-radius:20px}.proof-header h3{font-size:22px}.proof-orbs{gap:6px}.proof-orbs img{max-width:88px}.proof-checklist{grid-template-columns:1fr}.process-steps{gap:12px}.process-step{grid-template-columns:40px 1fr;padding:16px;border-radius:18px}.process-step .step-num{width:36px;height:36px}.process-step .step-content p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.process-step .step-output{display:none}.process-step.is-expanded .step-content p{display:block;overflow:visible}.process-step.is-expanded .step-output{display:inline-flex}.process-toggle{display:inline-flex;align-items:center;justify-content:center;margin-top:12px;padding:7px 14px;border:1px solid rgba(139,115,85,.18);border-radius:999px;background:#fff;color:#8b7355;font:inherit;font-size:13px;font-weight:700;cursor:pointer}}
+
+/* Outcome */
+#outcome{background:var(--snow)}
+.outcome-media{display:grid;grid-template-columns:1fr;gap:24px;margin-top:32px}
+.outcome-media .media-card{border-radius:16px;overflow:hidden;background:white;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.outcome-media .media-card video,.outcome-media .media-card img{width:100%;display:block}
+.outcome-media .media-card video{width:100%;max-height:72vh;object-fit:contain;background:#111}
+.outcome-media .media-card .media-caption{padding:16px 20px;font-size:13px;color:#666}
+.outcome-switch-card{position:relative}
+.outcome-toggle{position:absolute;top:16px;right:16px;z-index:4;display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(250,248,245,.86);border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.12);backdrop-filter:blur(12px)}
+.outcome-toggle button{border:0;border-radius:999px;background:transparent;color:#777;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.outcome-toggle button.active{background:var(--ink);color:white}
+.app-frame{display:none;width:100%;height:min(760px,72vh);border:0;background:#f8f5f0}
+.outcome-switch-card[data-mode="app"] video{display:none}
+.outcome-switch-card[data-mode="app"] .app-frame{display:block}
+.outcome-switch-card[data-mode="app"] .media-caption-video{display:none}
+.outcome-switch-card:not([data-mode="app"]) .media-caption-app{display:none}
+@media(max-width:768px){.outcome-toggle{top:12px;right:12px}.outcome-toggle button{padding:7px 10px;font-size:12px}.app-frame{height:68vh}}
+
+/* Reflection */
+#reflection{background:var(--paper)}
+.reflection-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+@media(max-width:768px){.reflection-grid{grid-template-columns:1fr}}
+.reflection-card{background:white;border-radius:16px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.reflection-card h4{font-size:16px;font-weight:600;margin-bottom:12px;color:var(--ink)}
+.reflection-card p,.reflection-card li{font-size:14px;color:#555;line-height:1.8}
+.reflection-card ul{list-style:none;padding:0}
+.reflection-card ul li{padding-left:16px;position:relative;margin-bottom:8px}
+.reflection-card ul li::before{content:'';position:absolute;left:0;top:10px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+
+/* Footer */
+footer{text-align:center;padding:40px 5vw;font-size:13px;color:#999;border-top:1px solid var(--frost);background:var(--snow)}
+
+@media(max-width:600px){
+  section{padding:80px 5vw 60px}
+  h2{font-size:28px}
+  .top-bar{gap:14px;padding:14px 20px}
+  .top-bar .logo{min-width:0;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .top-bar .back-link{display:flex;flex:0 0 auto;font-size:13px;white-space:nowrap}
+  .hero-content{max-width:100%;padding:0 24px}
+  .hero-content h1{font-size:clamp(36px,11vw,44px);letter-spacing:2px;overflow-wrap:anywhere}
+  .hero-content .hero-sub{letter-spacing:4px}
+  .hero-content .hero-tagline{max-width:300px;font-size:13px}
+  .page-nav{right:12px}
+  .page-nav a{width:6px;height:6px}
+  .overview-grid{grid-template-columns:repeat(2,1fr)}
+  .system-flow{padding:24px 16px}
+  .flow-branches{grid-template-columns:1fr;align-items:stretch}
+}
+</style>
+</head>
+<body>
+
+<nav class="top-bar">
+  <a href="#hero" class="logo">IsleSoul 心屿</a>
+  <a href="../../index.html" class="back-link portfolio-home">← 返回作品集首页</a>
+</nav>
+
+<nav class="page-nav" aria-label="项目页导航">
+  <a href="#hero" data-label="Hero" aria-label="跳到首页首屏" class="active"></a>
+  <a href="#overview" data-label="概览" aria-label="跳到项目概览"></a>
+  <a href="#concept" data-label="概念" aria-label="跳到项目概念"></a>
+  <a href="#system" data-label="系统" aria-label="跳到三空间交互系统"></a>
+  <a href="#process" data-label="流程" aria-label="跳到设计流程"></a>
+  <a href="#outcome" data-label="成果" aria-label="跳到最终成果"></a>
+  <a href="#reflection" data-label="复盘" aria-label="跳到复盘与思考"></a>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>IsleSoul 心屿</h1>
+    <p class="hero-sub">情绪疗愈三空间</p>
+    <p class="hero-tagline">三个空间，三种疗愈——在数字世界中安放你的每一种情绪。</p>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- Overview -->
+<section id="overview">
+  <div class="section-inner">
+    <p class="section-label">Overview</p>
+    <h2 class="reveal">项目概览</h2>
+    <div class="overview-grid">
+      <div class="overview-item reveal reveal-delay-1"><div class="label">项目类型</div><div class="value">交互媒体与心理疗愈数字产品</div></div>
+      <div class="overview-item reveal reveal-delay-2"><div class="label">时间</div><div class="value">2026.04</div></div>
+      <div class="overview-item reveal reveal-delay-3"><div class="label">角色</div><div class="value">交互设计 · 部分视觉 · 前端开发</div></div>
+      <div class="overview-item reveal reveal-delay-4"><div class="label">工具</div><div class="value">Figma · nano banana · trea · seedance · 海螺AI · Kimi API</div></div>
+    </div>
+    <p class="overview-desc reveal">IsleSoul 心屿是一个面向 18–30 岁年轻人的低门槛、私密、非临床情绪陪伴与睡前放松工具。它不替代心理治疗，而是把日常情绪困扰拆成三个更容易进入的任务流：想说、睡不着、想放空。</p>
+    <div class="research-strip reveal reveal-delay-2" aria-label="调研结论摘要">
+      <div class="research-card">
+        <span>Positioning</span>
+        <strong>非临床情绪陪伴</strong>
+        <p>产品边界从“治疗”调整为低暴露、可匿名、随时可进入的情绪支持，避免给用户过重的心理负担。</p>
+      </div>
+      <div class="research-card">
+        <span>Entry Point</span>
+        <strong>睡前是低阻力入口</strong>
+        <p>睡眠问题比心理求助更少污名，也天然适合白噪音、轻互动和短会话设计。</p>
+      </div>
+      <div class="research-card">
+        <span>MVP Flow</span>
+        <strong>想说 / 睡不着 / 想放空</strong>
+        <p>三空间结构对应三类高频场景，让用户不用先判断自己“严重不严重”，而是直接选择当下需要的陪伴方式。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Concept -->
+<section id="concept">
+  <div class="section-inner">
+    <p class="section-label">Concept</p>
+    <div class="concept-proposition reveal">当情绪无法被命名时，一个空间比一句话更有力量。</div>
+    <div class="concept-keywords reveal reveal-delay-1">
+      <span class="keyword-tag">三空间</span><span class="keyword-tag">倾诉</span><span class="keyword-tag">放松</span><span class="keyword-tag">解压</span>
+      <span class="keyword-tag">数字疗愈</span><span class="keyword-tag">角色化陪伴</span><span class="keyword-tag">Vibe Coding</span>
+    </div>
+    <p class="concept-text reveal reveal-delay-2">IsleSoul 心屿将情绪支持拆解为三种核心需求——说出来、静下来、动起来——并分别赋予一个角色空间。用户通过垂直滑动在三空间之间自由切换，每种空间提供不同的交互方式和感官体验。</p>
+  </div>
+</section>
+
+<!-- System -->
+<section id="system">
+  <div class="section-inner">
+    <p class="section-label">System</p>
+    <h2 class="reveal">三空间交互系统</h2>
+    <div class="system-grid">
+      <div class="system-card nian reveal reveal-delay-1">
+        <div class="phone-frame">
+          <img src="assets/images/group-66.png" alt="念念空间界面">
+          <div class="frame-overlay"></div>
+          <div class="frame-notch"></div>
+        </div>
+        <div class="system-card-body">
+          <div class="space-header"><div class="space-dot"></div><h4>念念 · 倾诉</h4></div>
+          <div class="space-tag">AI情绪对话</div>
+          <p>AI情绪对话陪伴，歌词式滚动回复。右上角情绪扫描仪通过5题测试智能推荐空间。</p>
+        </div>
+      </div>
+      <div class="system-card mian reveal reveal-delay-2">
+        <div class="phone-frame">
+          <img src="assets/images/group-71.png" alt="眠眠空间界面">
+          <div class="frame-overlay"></div>
+          <div class="frame-notch"></div>
+        </div>
+        <div class="system-card-body">
+          <div class="space-header"><div class="space-dot"></div><h4>眠眠 · 放松</h4></div>
+          <div class="space-tag">白噪音疗愈</div>
+          <p>4种白噪音（森林/篝火/雨声/海浪），点击球体切换播放，声波动画随音律动。</p>
+        </div>
+      </div>
+      <div class="system-card song reveal reveal-delay-3">
+        <div class="phone-frame">
+          <img src="assets/images/song-page.png" alt="松松空间界面">
+          <div class="frame-overlay"></div>
+          <div class="frame-notch"></div>
+        </div>
+        <div class="system-card-body">
+          <div class="space-header"><div class="space-dot"></div><h4>松松 · 解压</h4></div>
+          <div class="space-tag">触觉解压交互</div>
+          <p>4种解压材质（泡泡/水晶泥/木鱼/泡泡纸），点击触发粒子动画与视频反馈。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 交互系统可视化 -->
+    <div class="system-flow reveal" data-flow-widget>
+      <div class="flow-header">
+        <h3>交互流程</h3>
+        <small>时长建议：25-30秒</small>
+      </div>
+      <div class="flow-diagram" aria-label="心屿交互流程节点">
+        <button class="flow-step active" type="button" data-flow-step="enter">
+          <div class="flow-orb"><span class="flow-icon-mark">↗</span></div>
+          <strong>进入APP</strong>
+          <span>默认念念空间</span>
+        </button>
+        <button class="flow-step" type="button" data-flow-step="nian">
+          <div class="flow-orb"><img src="assets/images/orb-nian.png" alt=""></div>
+          <strong>念念 · 倾诉</strong>
+          <span>AI对话 · 情绪扫描</span>
+        </button>
+        <button class="flow-step" type="button" data-flow-step="mian">
+          <div class="flow-orb"><img src="assets/images/orb-mian.png" alt=""></div>
+          <strong>眠眠 · 放松</strong>
+          <span>白噪音 · 声波动画</span>
+        </button>
+        <button class="flow-step" type="button" data-flow-step="song">
+          <div class="flow-orb"><img src="assets/images/orb-song.png" alt=""></div>
+          <strong>松松 · 解压</strong>
+          <span>粒子动画 · 视频反馈</span>
+        </button>
+      </div>
+      <div class="flow-branches" aria-label="关键交互机制">
+        <button class="flow-branch active" type="button" data-flow-branch="scan">
+          <div class="branch-icon">◎</div>
+          <div><div class="branch-name">情绪扫描仪</div><div class="branch-action">5题测试 → 推荐空间</div></div>
+        </button>
+        <button class="flow-branch" type="button" data-flow-branch="swipe">
+          <div class="branch-icon">↕</div>
+          <div><div class="branch-name">垂直滑动</div><div class="branch-action">三空间自由切换</div></div>
+        </button>
+        <button class="flow-branch" type="button" data-flow-branch="recommend">
+          <div class="branch-icon">⌖</div>
+          <div><div class="branch-name">智能推荐</div><div class="branch-action">F倾诉 / R放松 / P解压</div></div>
+        </button>
+      </div>
+      <div class="flow-detail" aria-live="polite">
+        <p data-flow-kicker>当前流程</p>
+        <h4 data-flow-title>进入 APP</h4>
+        <p data-flow-desc>用户进入后默认落在念念空间，先用柔和情绪球与低刺激画面建立安全感，再引导进入倾诉、放松或解压路径。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process">
+  <div class="section-inner">
+    <p class="section-label">Process</p>
+    <h2 class="reveal">设计流程</h2>
+    <div class="process-layout">
+      <div class="process-steps">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <span class="step-kicker">Research Framing</span>
+            <h4>先确定产品边界：陪伴，而不是治疗</h4>
+            <p>基于调研，心屿被定位为年轻人的低门槛、私密、非临床情绪陪伴工具。重点不是诊断或干预，而是帮助用户在睡前、独处或情绪上来时更容易开始自我安放。</p>
+            <div class="step-output">产出：产品定位与目标人群</div>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <span class="step-kicker">Task Definition</span>
+            <h4>把需求转成三个可进入的任务流</h4>
+            <p>调研建议将 MVP 聚焦为“想说、睡不着、想放空”。因此三空间不只是视觉分区，而是分别承接匿名倾诉、睡前放松和 3 分钟内轻互动解压。</p>
+            <div class="step-output">产出：MVP 任务流</div>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <span class="step-kicker">Visual System</span>
+            <h4>让每个空间拥有明确的情绪角色</h4>
+            <p>念念对应倾诉，使用更柔软、靠近陪伴感的暖色；眠眠对应放松，使用低刺激蓝紫色；松松对应解压，使用更明亮的黄色和触发感表情。</p>
+            <div class="step-output">产出：角色球体与空间气质</div>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-4">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <span class="step-kicker">Interaction Prototype</span>
+            <h4>用垂直滑动把三个空间串成连续体验</h4>
+            <p>用户不需要返回菜单反复选择，而是通过上下滑动在倾诉、放松、解压之间切换。情绪扫描仪作为快速入口，把模糊感受转换为推荐路径。</p>
+            <div class="step-output">产出：可操作前端原型</div>
+          </div>
+        </div>
+      </div>
+      <aside class="process-proof reveal reveal-delay-2" aria-label="设计流程产出">
+        <div class="proof-header">
+          <span>Design Output</span>
+          <h3>从调研到空间的映射</h3>
+          <p>这部分展示的不是素材堆叠，而是项目的设计逻辑：调研先定义使用场景，再把场景转成情绪动作和可操作空间。</p>
+        </div>
+        <div class="proof-orbs">
+          <figure>
+            <img src="assets/images/orb-nian.png" alt="念念角色球体">
+            <figcaption>念念<br><small>说出来</small></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/images/orb-mian.png" alt="眠眠角色球体">
+            <figcaption>眠眠<br><small>静下来</small></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/images/orb-song.png" alt="松松角色球体">
+            <figcaption>松松<br><small>动起来</small></figcaption>
+          </figure>
+        </div>
+        <div class="proof-checklist">
+          <div><strong>产品边界</strong><span>非临床、低门槛、私密陪伴，避免把日常情绪支持包装成治疗承诺。</span></div>
+          <div><strong>信息架构</strong><span>三空间分别承接倾诉、放松、解压，降低用户选择成本。</span></div>
+          <div><strong>交互骨架</strong><span>垂直滑动负责空间切换，点击与测试负责具体行为触发。</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Outcome -->
+<section id="outcome">
+  <div class="section-inner">
+    <p class="section-label">Outcome</p>
+    <h2 class="reveal">最终成果</h2>
+    <div class="outcome-media">
+      <div class="media-card outcome-switch-card reveal reveal-delay-1" data-mode="video">
+        <div class="outcome-toggle" aria-label="最终成果展示切换">
+          <button type="button" class="active" data-outcome-view="video">观看视频</button>
+          <button type="button" data-outcome-view="app">体验 APP</button>
+        </div>
+        <video src="assets/images/app-demo.mp4" poster="assets/images/IsleSoul 心屿-海报.jpg" controls playsinline></video>
+        <iframe class="app-frame" title="心屿 APP 交互体验" src="./app/emotion-healing-app-optimized.html"></iframe>
+        <div class="media-caption media-caption-video">APP 完整交互演示：三空间切换、AI 对话、情绪扫描、白噪音与解压交互。</div>
+        <div class="media-caption media-caption-app">可操作原型：在这里直接体验心屿 APP 的情绪疗愈流程。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reflection -->
+<section id="reflection">
+  <div class="section-inner">
+    <p class="section-label">Reflection</p>
+    <h2 class="reveal">复盘与思考</h2>
+    <div class="reflection-grid">
+      <div class="reflection-card reveal reveal-delay-1">
+        <h4>我的职责</h4>
+        <p>交互设计 · 部分视觉设计 · 前端开发（Vibe Coding）</p>
+      </div>
+      <div class="reflection-card reveal reveal-delay-2">
+        <h4>技术难点</h4>
+        <ul>
+          <li><strong>Vibe Coding还原设计</strong>：AI生成代码与Figma设计稿存在视觉偏差，通过截图对比逐像素调整CSS变量迭代逼近</li>
+          <li><strong>念念AI回答调性控制</strong>：通过System Prompt设定角色人格——温柔治愈的倾听者，回答简短（2-3句），优先共情而非解决问题，避免说教与机械感</li>
+        </ul>
+      </div>
+      <div class="reflection-card reveal reveal-delay-3">
+        <h4>改进空间</h4>
+        <ul>
+          <li>眠眠空间可接入真实白噪音音频文件，替代视觉声波模拟</li>
+          <li>情绪扫描结果存入本地存储，形成情绪日记</li>
+          <li>优化为响应式布局，适配更多设备</li>
+        </ul>
+      </div>
+      <div class="reflection-card reveal reveal-delay-4">
+        <h4>工具链</h4>
+        <p>Figma · nano banana · trea · seedance · 海螺AI · Kimi API · HTML/CSS/JS</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>IsleSoul 心屿 · 交互媒体与心理疗愈 · 2026</p></footer>
+
+<script>
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.page-nav a');
+function updateNav(){
+  let current='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.id});
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+}
+window.addEventListener('scroll',updateNav);
+window.addEventListener('load',updateNav);
+
+const revealEls=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')});
+},{threshold:0.15});
+revealEls.forEach(el=>observer.observe(el));
+
+document.querySelectorAll('.process-step').forEach(step=>{
+  const content=step.querySelector('.step-content');
+  if(!content||content.querySelector('.process-toggle'))return;
+  const toggle=document.createElement('button');
+  toggle.type='button';
+  toggle.className='process-toggle';
+  toggle.setAttribute('aria-expanded','false');
+  toggle.textContent='\u5c55\u5f00';
+  content.appendChild(toggle);
+  toggle.addEventListener('click',()=>{
+    const expanded=step.classList.toggle('is-expanded');
+    toggle.setAttribute('aria-expanded',String(expanded));
+    toggle.textContent=expanded?'\u6536\u8d77':'\u5c55\u5f00';
+  });
+});
+
+const portfolioHome=document.querySelector('.portfolio-home');
+if(portfolioHome){
+  portfolioHome.href='../../index.html';
+}
+
+const outcomeCard=document.querySelector('.outcome-switch-card');
+document.querySelectorAll('[data-outcome-view]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const mode=button.dataset.outcomeView;
+    outcomeCard.dataset.mode=mode;
+    document.querySelectorAll('[data-outcome-view]').forEach(item=>item.classList.toggle('active',item===button));
+    if(mode==='app'){
+      outcomeCard.querySelector('video')?.pause();
+    }
+  });
+});
+
+const flowCopy={
+  enter:{
+    kicker:'当前流程',
+    title:'进入 APP',
+    desc:'用户进入后默认落在念念空间，先用柔和情绪球与低刺激画面建立安全感，再引导进入倾诉、放松或解压路径。'
+  },
+  nian:{
+    kicker:'当前流程',
+    title:'念念 · 倾诉',
+    desc:'用户可以通过 AI 对话表达情绪，也可以进入情绪扫描仪完成 5 题测试，让系统推荐更适合的疗愈空间。'
+  },
+  mian:{
+    kicker:'当前流程',
+    title:'眠眠 · 放松',
+    desc:'向上或向下滑动进入眠眠空间，通过白噪音与声波动画降低信息刺激，适合睡前、焦虑后或需要平静的时刻。'
+  },
+  song:{
+    kicker:'当前流程',
+    title:'松松 · 解压',
+    desc:'继续滑动进入松松空间，点击不同解压材质触发粒子动画和视频反馈，让情绪释放变成可操作的互动行为。'
+  },
+  scan:{
+    kicker:'关键机制',
+    title:'情绪扫描仪',
+    desc:'5 题快速测试把模糊情绪转成明确入口：倾诉、放松或解压，让用户不用自己判断从哪里开始。'
+  },
+  swipe:{
+    kicker:'关键机制',
+    title:'垂直滑动',
+    desc:'三空间保持同一套滑动逻辑，用户可以在念念、眠眠、松松之间自由切换，形成轻量但连续的浏览体验。'
+  },
+  recommend:{
+    kicker:'关键机制',
+    title:'智能推荐',
+    desc:'扫描结果会对应到 F 倾诉、R 放松、P 解压三类路径，把功能选择包装成更直觉的情绪推荐。'
+  }
+};
+const flowTitle=document.querySelector('[data-flow-title]');
+const flowDesc=document.querySelector('[data-flow-desc]');
+const flowKicker=document.querySelector('[data-flow-kicker]');
+function setFlowActive(key,type){
+  const copy=flowCopy[key];
+  if(!copy||!flowTitle||!flowDesc||!flowKicker)return;
+  flowKicker.textContent=copy.kicker;
+  flowTitle.textContent=copy.title;
+  flowDesc.textContent=copy.desc;
+  document.querySelectorAll('[data-flow-step]').forEach(item=>item.classList.toggle('active',type==='step'&&item.dataset.flowStep===key));
+  document.querySelectorAll('[data-flow-branch]').forEach(item=>item.classList.toggle('active',type==='branch'&&item.dataset.flowBranch===key));
+}
+document.querySelectorAll('[data-flow-step]').forEach(button=>{
+  button.addEventListener('click',()=>setFlowActive(button.dataset.flowStep,'step'));
+});
+document.querySelectorAll('[data-flow-branch]').forEach(button=>{
+  button.addEventListener('click',()=>setFlowActive(button.dataset.flowBranch,'branch'));
+});
+</script>
+</body>
+</html>

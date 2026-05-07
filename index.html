@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>陈学成 | WORKS</title>
+    <meta
+      name="description"
+      content="陈学成的交互设计作品集首页，呈现沉浸式交互、AIGC 视觉、情绪产品原型与品牌体验项目。"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="page page-works">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="回到 WORKS 首页">
+        <span>CHEN XUECHENG</span>
+        <small>Interaction / AIGC / Spatial</small>
+      </a>
+      <nav class="nav-links" aria-label="全局导航">
+        <a href="./about.html">ABOUT</a>
+        <a class="is-active" href="./index.html">WORKS</a>
+        <a href="./ai-guide.html">AI GUIDE</a>
+      </nav>
+      <div class="language-toggle" aria-label="语言切换">
+        <button class="is-active" type="button" data-lang-toggle="zh">中</button>
+        <button type="button" data-lang-toggle="en">EN</button>
+      </div>
+    </header>
+
+    <div class="entry-sequence" data-entry-sequence aria-label="首页入场动画">
+      <video
+        class="entry-media"
+        src="./assets/garden-intro.mp4"
+        poster="./assets/dandelion-wall-still.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      ></video>
+      <div class="entry-field" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="entry-core">
+        <svg class="entry-flower" viewBox="0 0 420 420" role="img" aria-label="蒲公英几何生长图形">
+          <defs>
+            <radialGradient id="entryGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fffaf0" stop-opacity="0.92" />
+              <stop offset="44%" stop-color="#c9d4d8" stop-opacity="0.26" />
+              <stop offset="100%" stop-color="#c9d4d8" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle class="entry-glow" cx="210" cy="210" r="162" fill="url(#entryGlow)" />
+          <g class="entry-rings">
+            <circle cx="210" cy="210" r="42" />
+            <circle cx="210" cy="210" r="76" />
+            <circle cx="210" cy="210" r="118" />
+            <circle cx="210" cy="210" r="160" />
+          </g>
+          <g class="entry-petals">
+            <path d="M210 210 C174 142 178 92 210 44 C242 92 246 142 210 210Z" />
+            <path d="M210 210 C246 142 292 120 350 132 C326 188 286 218 210 210Z" />
+            <path d="M210 210 C292 218 326 254 350 308 C292 300 246 278 210 210Z" />
+            <path d="M210 210 C246 278 242 328 210 376 C178 328 174 278 210 210Z" />
+            <path d="M210 210 C174 278 128 300 70 308 C94 254 128 218 210 210Z" />
+            <path d="M210 210 C128 218 94 188 70 132 C128 120 174 142 210 210Z" />
+          </g>
+          <g class="entry-spiral">
+            <path d="M210 210 C250 170 300 192 304 236 C308 282 254 314 204 290 C146 262 136 184 188 142 C252 92 344 134 368 210" />
+            <path d="M210 210 C184 184 190 148 222 132 C264 112 312 144 318 194 C326 258 270 314 204 304 C124 292 88 200 136 132" />
+          </g>
+        </svg>
+        <div class="entry-copy">
+          <p class="entry-kicker">INTERACTION / AIGC / IMMERSIVE</p>
+          <p>137.5° / FIBONACCI GROWTH</p>
+          <h1>陈学成</h1>
+          <p>让视觉成为可被触发的体验。</p>
+        </div>
+      </div>
+      <button class="entry-skip" type="button" data-entry-skip>跳过</button>
+    </div>
+
+    <main>
+      <section class="works-hero" aria-labelledby="hero-title">
+        <div class="hero-film-bleed" aria-hidden="true"></div>
+        <video
+          class="hero-film hero-film-main"
+          data-preview-video="true"
+          data-src="./assets/Dandelion-Wall.mp4"
+          poster="./assets/dandelion-wall-still.jpg"
+          muted
+          loop
+          playsinline
+          preload="none"
+        ></video>
+        <div class="hero-veiling" aria-hidden="true"></div>
+        <div class="decoder-noise" aria-hidden="true">
+          <span>SCAN</span>
+          <span>CXC</span>
+          <span>TD</span>
+          <span>AIGC</span>
+          <span>137.5</span>
+          <span>NDI</span>
+          <span>FLOW</span>
+          <span>SENSE</span>
+        </div>
+        <div class="hero-content decoder-hero" data-decoder-stage>
+          <div class="decoder-copy">
+            <p class="kicker">交互设计 / AIGC 视觉 / 沉浸式体验</p>
+            <p class="decoder-label">PROJECT DECODER / 作品解码器</p>
+            <h1 id="hero-title" data-decode-text="陈学成">陈学成</h1>
+            <p class="hero-statement" data-decode-text="让视觉成为可被触发的体验。">让视觉成为可被触发的体验。</p>
+            <p class="hero-note">
+              以影像、空间和可运行原型，把抽象概念转译成可被观看、触发和进入的体验系统。
+            </p>
+            <div class="hero-focus" aria-label="核心作品信号">
+              <p class="hero-focus-main">
+                <span data-focus-label>STAR PROJECT</span>
+                <strong data-focus-title>生命自赋几何诗</strong>
+                <small data-focus-body>5 屏沉浸式展览 / 雷达触发 / TouchDesigner 链路</small>
+              </p>
+              <p>
+                <span>01</span>
+                <strong data-focus-item>浙江美术馆入选</strong>
+              </p>
+              <p>
+                <span>02</span>
+                <strong data-focus-item>空间叙事与实时影像</strong>
+              </p>
+              <p>
+                <span>03</span>
+                <strong data-focus-item>可运行交互原型</strong>
+              </p>
+            </div>
+            <div class="hero-actions">
+              <a class="text-link" href="./projects/garden/index.html" data-project-link="immersive">进入作品</a>
+              <a class="text-link" href="./ai-guide.html">AI 导览</a>
+            </div>
+          </div>
+
+          <div class="project-radar" aria-label="作品雷达，移动鼠标或触摸项目点以解码作品入口">
+            <div class="radar-grid" aria-hidden="true"></div>
+            <div class="radar-sweep" aria-hidden="true"></div>
+            <div class="radar-center" aria-hidden="true">
+              <span>CXC</span>
+            </div>
+            <p class="radar-eyebrow">SCAN TO DECODE</p>
+            <a class="radar-node is-active" href="./projects/garden/index.html" data-project-link="immersive" data-radar-node="immersive" style="--x: 66%; --y: 26%">
+              <span>01</span>
+              <strong>生命自赋几何诗</strong>
+              <small>Immersive / Radar / TouchDesigner</small>
+            </a>
+            <a class="radar-node" href="./projects/islesoul/index.html" data-project-link="prototype" data-radar-node="prototype" style="--x: 29%; --y: 38%">
+              <span>02</span>
+              <strong>心屿</strong>
+              <small>Product Prototype / Emotion</small>
+            </a>
+            <a class="radar-node" href="./projects/guanxia/index.html" data-project-link="brand" data-radar-node="brand" style="--x: 74%; --y: 64%">
+              <span>03</span>
+              <strong>观夏 · 闻香识我</strong>
+              <small>Brand Experience / Scent</small>
+            </a>
+            <a class="radar-node" href="./projects/ai-video/ai-video.html" data-project-link="aigc" data-radar-node="aigc" style="--x: 38%; --y: 73%">
+              <span>04</span>
+              <strong>AI 影像实验</strong>
+              <small>AIGC / Moving Image</small>
+            </a>
+            <div class="radar-readout" aria-live="polite">
+              <p class="radar-readout-label">当前解码</p>
+              <h2 data-radar-title>生命自赋几何诗</h2>
+              <p data-radar-body>沉浸式空间、实时影像、雷达交互与现场输出。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-intro" id="selected" aria-labelledby="selected-title">
+        <div class="section-label">SELECTED WORKS</div>
+        <div class="intro-copy">
+          <h2 id="selected-title">从空间、情绪到感官的体验实验。</h2>
+          <p>
+            首页只保留判断力最强的入口：一个沉浸式代表项目，一组能快速辨认方向的精选作品。
+          </p>
+        </div>
+      </section>
+
+      <section class="showcase" aria-label="精选作品入口">
+        <a class="showcase-primary" href="./projects/garden/index.html" data-project-link="immersive">
+          <div class="media-frame">
+            <img src="./assets/garden-hero.png" alt="生命自赋几何诗主视觉画面" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-copy">
+            <p class="project-type">Immersive Interaction / Flagship</p>
+            <h2>生命自赋几何诗</h2>
+            <p class="project-en">Garden of Ordinals</p>
+            <p>
+              以斐波那契生长为线索，把观众位置、卡片翻转、地面索引与主墙影像连接成一套可被触发的空间叙事。
+            </p>
+          </div>
+        </a>
+
+        <div class="showcase-stack">
+          <a class="project-strip" href="./projects/islesoul/index.html" data-project-link="prototype">
+            <img src="./assets/islesoul-cover.jpg" alt="心屿情绪疗愈产品视觉" loading="lazy" decoding="async" />
+            <div>
+              <p class="project-type">Emotional Prototype</p>
+              <h3>心屿</h3>
+              <p>面向当代青年情绪状态的数字产品原型，把陪伴、倾诉与放松转译成可进入的互动场景。</p>
+            </div>
+          </a>
+
+          <a class="project-strip" href="./projects/guanxia/index.html" data-project-link="brand">
+            <img src="./assets/guanxia-cover.png" alt="观夏闻香识我视觉画面" loading="lazy" decoding="async" />
+            <div>
+              <p class="project-type">Brand Experience</p>
+              <h3>观夏 · 闻香识我</h3>
+              <p>以植物香气、用户画像和视觉触点组织品牌感知体验。</p>
+            </div>
+          </a>
+
+          <a class="project-strip project-strip-dark" href="./projects/ai-video/ai-video.html" data-project-link="aigc">
+            <img src="./assets/ai-generated-cover.jpg" alt="AI 影像实验生成视觉" loading="lazy" decoding="async" />
+            <div>
+              <p class="project-type">AI Moving Image</p>
+              <h3>AI 影像实验</h3>
+              <p>用生成式工具探索短片镜头、氛围、节奏和动态视觉表达。</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="quiet-next" aria-labelledby="next-title">
+        <p class="section-label">NEXT</p>
+        <h2 id="next-title">如果不确定先看哪一个，让 AI GUIDE 按关注点带你进入作品。</h2>
+        <div class="next-actions">
+          <a class="soft-button" href="./ai-guide.html">打开 AI GUIDE</a>
+          <a class="soft-button" href="./about.html">查看 ABOUT</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

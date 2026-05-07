@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>陈学成 | AI GUIDE</title>
+    <meta name="description" content="陈学成作品集的 AI 导览界面，按关注方向推荐项目路径。" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="page page-guide">
+    <header class="site-header">
+      <a class="brand" href="./index.html">
+        <span>CHEN XUECHENG</span>
+        <small>Portfolio Guide</small>
+      </a>
+      <nav class="nav-links" aria-label="全局导航">
+        <a href="./about.html">ABOUT</a>
+        <a href="./index.html">WORKS</a>
+        <a class="is-active" href="./ai-guide.html">AI GUIDE</a>
+      </nav>
+      <div class="language-toggle" aria-label="语言切换">
+        <button class="is-active" type="button" data-lang-toggle="zh">中</button>
+        <button type="button" data-lang-toggle="en">EN</button>
+      </div>
+    </header>
+
+    <main class="guide-shell">
+      <section class="guide-hero" aria-labelledby="guide-title">
+        <p class="kicker">AI GUIDE / CURATED PATH</p>
+        <h1 id="guide-title" data-i18n="guide.title">选择方向，直接进入对应作品。</h1>
+        <p>
+          选择你关心的方向，导览会把项目、能力和观看顺序整理成一条更清楚的路径。
+        </p>
+      </section>
+
+      <section class="guide-board" aria-label="作品导览问题">
+        <div class="guide-questions">
+          <button class="guide-question is-selected" type="button" data-guide="immersive" id="immersive">
+            <span>01</span>
+            想看最强项目
+          </button>
+          <button class="guide-question" type="button" data-guide="prototype" id="prototype">
+            <span>02</span>
+            想看产品原型
+          </button>
+          <button class="guide-question" type="button" data-guide="brand" id="brand">
+            <span>03</span>
+            想看品牌体验
+          </button>
+          <button class="guide-question" type="button" data-guide="aigc" id="aigc">
+            <span>04</span>
+            想看 AIGC 视觉
+          </button>
+          <button class="guide-question" type="button" data-guide="about">
+            <span>05</span>
+            想快速了解我
+          </button>
+        </div>
+
+        <article class="guide-answer" aria-live="polite">
+          <p class="answer-label">推荐路径</p>
+          <h2 data-answer-title>生命自赋几何诗</h2>
+          <p data-answer-body>
+            先看这个项目。它最集中地呈现了沉浸式空间交互、动态影像、观众触发、TouchDesigner 工作流和现场输出能力。
+          </p>
+          <div class="answer-meta" data-answer-meta>
+            <span>沉浸式空间</span>
+            <span>实时影像</span>
+            <span>雷达交互</span>
+          </div>
+          <a class="soft-button" data-answer-link href="./index.html#selected">回到作品入口</a>
+        </article>
+
+        <section class="chat-window" aria-labelledby="chat-title">
+          <div class="chat-topline">
+            <div>
+              <p class="section-label">AI 导览窗口</p>
+              <h2 id="chat-title">导览助手</h2>
+            </div>
+            <span data-chat-status>AI 未连接</span>
+          </div>
+          <div class="chat-log" data-chat-log aria-live="polite">
+            <p class="chat-message chat-message-ai" data-chat-intro>
+              你好，我是你的导览助手，帮你快速了解我和我的对应项目
+            </p>
+            <p class="chat-message chat-message-user" data-chat-question>我想先看最能代表你的项目。</p>
+            <p class="chat-message chat-message-ai" data-chat-answer>
+              建议先看《生命自赋几何诗》。它能同时证明空间叙事、实时影像、交互逻辑和现场执行能力。
+            </p>
+          </div>
+          <div class="chat-suggestions" aria-label="快捷问题">
+            <button type="button" data-guide-shortcut="immersive">最强项目</button>
+            <button type="button" data-guide-shortcut="prototype">产品原型</button>
+            <button type="button" data-guide-shortcut="brand">品牌体验</button>
+            <button type="button" data-guide-shortcut="aigc">AIGC 视觉</button>
+          </div>
+          <form class="chat-input" data-chat-form aria-label="作品集导览聊天输入">
+            <input data-chat-input type="text" autocomplete="off" placeholder="输入你想了解的方向" />
+            <button type="submit">发送</button>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: chen-xuecheng-portfolio
+    runtime: node
+    plan: free
+    buildCommand: ""
+    startCommand: npm start
+    healthCheckPath: /api/status
+    autoDeploy: true
+    envVars:
+      - key: GUIDE_API_KEY
+        sync: false
+      - key: NIAN_API_KEY
+        sync: false
+      - key: AI_BASE_URL
+        value: https://api.deepseek.com
+      - key: AI_MODEL
+        value: deepseek-chat
+      - key: GUIDE_TEMPERATURE
+        value: "0.68"
+      - key: GUIDE_MAX_TOKENS
+        value: "520"
+      - key: NIAN_TEMPERATURE
+        value: "0.85"
+      - key: NIAN_MAX_TOKENS
+        value: "180"

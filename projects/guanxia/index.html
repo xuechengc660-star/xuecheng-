@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="观夏·闻香识我品牌互动装置案例，展示香味人格测试、TouchDesigner 动态视觉、试香卡与胸针等完整交互与视觉产出。">
+<title>观夏·闻香识我 — TO SUMMER · Scent Knows Me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f0eb;
+    --accent: #8b7355;
+    --bamboo: #4a5c3e;
+    --frost: #e8e0d8;
+    --snow: #faf8f5;
+    --serif: 'Noto Serif SC', 'Songti SC', serif;
+    --sans: 'Noto Sans SC', 'PingFang SC', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── Global section ── */
+  section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 5vw;
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+  }
+
+  .en-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin: 24px 0;
+    opacity: 0.5;
+  }
+
+
+  /* ═══════════════════════════════════
+     HERO
+     ═══════════════════════════════════ */
+  #hero {
+    height: 100vh;
+    background: var(--ink);
+    color: var(--snow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #hero .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('assets/images/封面.png') center center / cover no-repeat;
+    opacity: 0.35;
+    filter: grayscale(40%) brightness(0.7);
+  }
+
+  #hero .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    padding: 0 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroEnter 1.2s ease 0.3s forwards;
+  }
+
+  @keyframes heroEnter {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  #hero .project-type {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0.8;
+  }
+
+  #hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 300;
+    letter-spacing: 8px;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  #hero .subtitle {
+    font-family: var(--serif);
+    font-size: clamp(13px, 2vw, 16px);
+    letter-spacing: 4px;
+    opacity: 0.6;
+    margin-bottom: 40px;
+  }
+
+  #hero .hero-quote {
+    font-family: var(--serif);
+    font-size: clamp(14px, 2vw, 18px);
+    font-style: italic;
+    opacity: 0.7;
+    letter-spacing: 2px;
+    line-height: 1.8;
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    display: inline-block;
+    text-align: left;
+  }
+
+  #hero .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 3px;
+    opacity: 0.4;
+    animation: float 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+
+  /* ═══════════════════════════════════
+     OVERVIEW
+     ═══════════════════════════════════ */
+  #overview {
+    background: var(--snow);
+  }
+
+  #overview .section-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  #overview .ov-left h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  #overview .ov-left .en {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px 16px;
+    margin-bottom: 32px;
+  }
+
+  .info-label {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    padding-top: 2px;
+  }
+
+  .info-value {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .award-badge {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    padding: 8px 16px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-top: 8px;
+  }
+
+  #overview .ov-right h3 {
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .role-item {
+    font-size: 14px;
+    line-height: 2;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .role-item::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+
+  /* ═══════════════════════════════════
+     CONCEPT
+     ═══════════════════════════════════ */
+  #concept {
+    background: var(--paper);
+  }
+
+  #concept .section-inner {
+    max-width: 900px;
+  }
+
+  #concept .concept-lead {
+    font-family: var(--serif);
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.8;
+    letter-spacing: 2px;
+    margin-bottom: 48px;
+    color: var(--ink);
+  }
+
+  #concept .concept-lead em {
+    font-style: normal;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+  }
+
+  .keywords {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 48px;
+  }
+
+  .keyword-card {
+    border-top: 1px solid var(--frost);
+    padding-top: 24px;
+  }
+
+  .keyword-card h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .keyword-card p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #555;
+  }
+
+  #concept .concept-diagram {
+    margin-top: 64px;
+    width: 100%;
+    border: 1px solid var(--frost);
+    background: var(--snow);
+  }
+
+
+  /* ═══════════════════════════════════
+     SYSTEM
+     ═══════════════════════════════════ */
+  #system {
+    background: var(--snow);
+  }
+
+  .sys-block {
+    margin-bottom: 80px;
+  }
+
+  .sys-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .sys-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .sys-block h2 {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3vw, 32px);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .sys-block .sys-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #555;
+    max-width: 640px;
+    margin-bottom: 32px;
+  }
+
+  /* Perfume mapping table */
+  .perfume-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 24px;
+  }
+
+  .perfume-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-size: 14px;
+    border-bottom: 2px solid var(--frost);
+    color: var(--accent);
+  }
+
+  .perfume-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--frost);
+    line-height: 1.7;
+  }
+
+  .perfume-table tr:hover td {
+    background: rgba(139, 115, 85, 0.04);
+  }
+
+  /* Visual gallery */
+  .visual-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .visual-gallery img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    filter: grayscale(20%) brightness(0.95);
+    transition: filter 0.4s;
+  }
+
+  .visual-gallery img:hover {
+    filter: none;
+  }
+
+  /* Interaction diagram */
+  .interaction-flow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .flow-step {
+    flex: 1;
+    min-width: 180px;
+    border: 1px solid var(--frost);
+    padding: 24px;
+    background: var(--snow);
+    transition: border-color 0.3s;
+  }
+
+  .flow-step:hover {
+    border-color: var(--accent);
+  }
+
+  .flow-step .step-num {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .flow-step h4 {
+    font-family: var(--serif);
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .flow-step p {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.7;
+  }
+
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+
+  /* ═══════════════════════════════════
+     PROCESS
+     ═══════════════════════════════════ */
+  #process {
+    background: var(--paper);
+  }
+
+  .process-timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .process-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--frost);
+  }
+
+  .process-item {
+    position: relative;
+    margin-bottom: 56px;
+  }
+
+  .process-item::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    background: var(--paper);
+  }
+
+  .process-item h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .process-item p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #555;
+    max-width: 600px;
+  }
+
+  .process-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .process-gallery img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.3s;
+  }
+
+  .process-gallery video {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    background: var(--frost);
+  }
+
+  .process-gallery img:hover {
+    filter: none;
+  }
+
+
+  /* ═══════════════════════════════════
+     OUTCOME
+     ═══════════════════════════════════ */
+  #outcome {
+    background: var(--ink);
+    color: var(--snow);
+    min-height: auto;
+    padding: 120px 5vw;
+  }
+
+  #outcome .section-inner {
+    max-width: 1100px;
+  }
+
+  #outcome h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  #outcome .en-sub {
+    color: rgba(245, 240, 235, 0.4);
+  }
+
+  #outcome .outcome-lead {
+    font-family: var(--serif);
+    font-size: 18px;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin: 32px 0 48px;
+    line-height: 1.8;
+  }
+
+  .outcome-showcase {
+    margin-bottom: 64px;
+  }
+
+  .outcome-showcase img.main-img {
+    width: 100%;
+    max-height: 60vh;
+    object-fit: cover;
+    display: block;
+  }
+
+  .outcome-showcase video {
+    width: 100%;
+    max-height: 65vh;
+    object-fit: cover;
+    display: block;
+    background: #1a1a1a;
+  }
+
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .outcome-grid img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    transition: opacity 0.3s;
+  }
+
+  .outcome-grid img:hover {
+    opacity: 0.85;
+  }
+
+  .award-section {
+    border: 1px solid rgba(245, 240, 235, 0.15);
+    padding: 32px;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .award-section .award-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+
+  .award-section .award-detail {
+    font-size: 13px;
+    opacity: 0.5;
+    letter-spacing: 2px;
+  }
+
+
+  /* ═══════════════════════════════════
+     REFLECTION
+     ═══════════════════════════════════ */
+  #reflection {
+    background: var(--snow);
+    min-height: auto;
+    padding: 120px 5vw;
+  }
+
+  #reflection .section-inner {
+    max-width: 800px;
+  }
+
+  #reflection h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 36px);
+    letter-spacing: 4px;
+    margin-bottom: 48px;
+  }
+
+  .ref-block {
+    margin-bottom: 48px;
+  }
+
+  .ref-block h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--frost);
+    padding-bottom: 12px;
+  }
+
+  .ref-block p {
+    font-size: 14px;
+    line-height: 2;
+    color: #444;
+  }
+
+  .ref-block ul {
+    margin-top: 12px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .ref-block li {
+    font-size: 14px;
+    line-height: 2;
+    color: #444;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .ref-block li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+
+  /* ═══════════════════════════════════
+     NAV
+     ═══════════════════════════════════ */
+  .page-nav {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .page-nav a {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    opacity: 0.4;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .page-nav a:hover,
+  .page-nav a.active {
+    opacity: 1;
+    background: var(--accent);
+  }
+
+  .page-nav a .nav-label {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    color: var(--ink);
+    background: var(--snow);
+    padding: 4px 8px;
+    border: 1px solid var(--frost);
+  }
+
+  .page-nav a:hover .nav-label {
+    opacity: 1;
+  }
+
+  .portfolio-home-link {
+    position: fixed;
+    left: 24px;
+    top: 20px;
+    z-index: 120;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 14px;
+    color: var(--snow);
+    background: rgba(26, 26, 26, 0.5);
+    border: 1px solid rgba(250, 248, 245, 0.22);
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    backdrop-filter: blur(12px);
+  }
+
+  .portfolio-home-link:hover {
+    background: var(--snow);
+    color: var(--ink);
+  }
+
+
+  /* ── Animations ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transition: opacity 1s ease 0.3s;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+  }
+
+  /* scroll progress */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    z-index: 200;
+    transition: width 0.1s linear;
+    opacity: 0.6;
+  }
+
+  /* hover reveal: gallery images */
+  .visual-gallery img,
+  .outcome-grid img {
+    cursor: pointer;
+    transition: transform 0.6s ease, filter 0.6s ease, opacity 0.6s ease;
+  }
+
+  .visual-gallery img:hover,
+  .outcome-grid img:hover {
+    transform: scale(1.03);
+    filter: brightness(1.05) grayscale(0%);
+  }
+
+  .process-gallery img,
+  .process-gallery video {
+    transition: transform 0.6s ease, filter 0.6s ease;
+  }
+
+  .process-gallery img:hover,
+  .process-gallery video:hover {
+    transform: scale(1.02);
+    filter: grayscale(0%);
+  }
+
+  .keyword-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .keyword-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  }
+
+  .flow-step {
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .flow-step:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  }
+
+  .perfume-table td {
+    transition: background 0.3s ease;
+  }
+
+
+  /* ═══════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════ */
+  @media (max-width: 768px) {
+    #overview .section-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .keywords {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .visual-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .outcome-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .interaction-flow {
+      flex-direction: column;
+    }
+    .flow-arrow { display: none; }
+    .page-nav { right: 16px; }
+    section { padding: 60px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .visual-gallery { grid-template-columns: 1fr; }
+    .outcome-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a class="portfolio-home-link portfolio-home" href="../../index.html">← 返回作品集首页</a>
+
+<!-- Navigation -->
+<nav class="page-nav">
+  <a href="#hero"><span class="nav-label">Hero</span></a>
+  <a href="#overview"><span class="nav-label">概览</span></a>
+  <a href="#concept"><span class="nav-label">概念</span></a>
+  <a href="#system"><span class="nav-label">系统</span></a>
+  <a href="#process"><span class="nav-label">流程</span></a>
+  <a href="#outcome"><span class="nav-label">成果</span></a>
+  <a href="#reflection"><span class="nav-label">复盘</span></a>
+</nav>
+
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="project-type">品牌互动装置 · 2025年6月</div>
+    <h1>观夏·闻香识我</h1>
+    <div class="subtitle">TO SUMMER · Scent Knows Me</div>
+    <div class="divider" style="margin: 32px auto;"></div>
+    <div class="hero-quote">
+      香水不只是气味<br>
+      它是你另一个自己
+    </div>
+  </div>
+  <div class="scroll-hint">↓ 向下探索</div>
+</section>
+
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-inner">
+    <div class="ov-left">
+      <div class="en-sub">Overview</div>
+      <h2>项目概览</h2>
+      <div class="divider"></div>
+      <div class="info-grid">
+        <div class="info-label">项目类型</div>
+        <div class="info-value">品牌互动装置 · 香味可视化互动影像</div>
+        <div class="info-label">合作品牌</div>
+        <div class="info-value">TO SUMMER 观夏</div>
+        <div class="info-label">时间</div>
+        <div class="info-value">2025年6月</div>
+        <div class="info-label">工具</div>
+        <div class="info-value">TouchDesigner · Figma · Photoshop · After Effects · AR</div>
+        <div class="info-label">获奖</div>
+        <div class="info-value">第十九届「好创意」广东赛区本科组交叉学科类 三等奖</div>
+      </div>
+      <div class="award-badge">🏆 好创意 2025 · 三等奖 · 证书编号 ZCS-19thgxfsq-02013</div>
+    </div>
+    <div class="ov-right">
+      <div class="en-sub">My Role</div>
+      <h3>我的角色</h3>
+      <div class="divider"></div>
+      <div class="role-item">交互设计 — 主导完整交互逻辑与流程架构</div>
+      <div class="role-item">视觉设计 — 主视觉 TouchDesigner 动态设计与制作</div>
+      <div class="role-item">编程实现 — 五套香水动态视觉的 TD 编程</div>
+      <div class="role-item">产出设计 — 试香卡与胸针的设计与落地</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="section-inner">
+    <div class="en-sub">Concept</div>
+    <h2 style="font-family: var(--serif); font-size: clamp(28px,4vw,40px); letter-spacing: 3px; margin-bottom: 32px;">
+      香水是个人气质的延伸
+    </h2>
+    <div class="concept-lead">
+      但气味无形、无色，难以被描述，更难以被分享。<br>
+      闻香识我试图<em>用东方视觉意象</em>把这种无形的感知<br>
+      翻译成可见的画面——让每个人找到「代表自己」的那瓶香。
+    </div>
+
+    <div class="keywords">
+      <div class="keyword-card">
+        <h3>香味人格化</h3>
+        <p>将五款观夏香水转化为五种人格类型。气味不再只是嗅觉体验，而是成为可识别的自我标签。</p>
+      </div>
+      <div class="keyword-card">
+        <h3>可视化叙事</h3>
+        <p>用蝴蝶、墨锭、茶烟、松雪、桂瓣将无形的气味翻译成可见的动态画面。视觉不是背景，是气味本身的另一种语言。</p>
+      </div>
+      <div class="keyword-card">
+        <h3>仪式感传播</h3>
+        <p>类 MBTI 的测试机制，让每个人在完成测试的瞬间获得「专属归属感」，主动分享自己的香水人格。</p>
+      </div>
+    </div>
+
+    <img src="assets/images/交互逻辑.png" alt="交互逻辑图" class="concept-diagram" style="margin-top: 48px;">
+  </div>
+</section>
+
+
+<!-- SYSTEM -->
+<section id="system">
+  <div class="section-inner">
+
+    <div class="sys-block">
+      <div class="sys-label">Visual System</div>
+      <h2>视觉系统</h2>
+      <div class="sys-desc">
+        用克制的东方色系承托动态，让「运动」本身成为气味的语言。<br>
+        竹青色与青白色作为底色，动态效果在留白中展开——品牌的东方美学不靠颜色堆砌，靠的是「余白」。
+      </div>
+      <div class="visual-gallery">
+        <img src="assets/images/动态海报1.png" alt="动态海报1">
+        <img src="assets/images/动态海报2.png" alt="动态海报2">
+      </div>
+    </div>
+
+    <div class="sys-block">
+      <div class="sys-label">Interaction System</div>
+      <h2>交互系统</h2>
+      <div class="sys-desc">
+        用手势替代点击，让身体参与决定「你是谁」。<br>
+        三轮问答，每一轮都在缩小「你是谁」的答案范围。
+      </div>
+      <div class="interaction-flow">
+        <div class="flow-step">
+          <div class="step-num">01 — 气质</div>
+          <h4>内在气质</h4>
+          <p>五只蝴蝶在屏风中飞舞<br>手势激活，蝴蝶飞入最终画面</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-num">02 — 意境</div>
+          <h4>向往的意境</h4>
+          <p>手势切换八角窗窗景<br>滤镜随选择变化</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-num">03 — 气息</div>
+          <h4>记忆的气息</h4>
+          <p>手势控制光照<br>激活专属动态纹理</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-num">结果</div>
+          <h4>专属人格</h4>
+          <p>动态海报 + 试香卡<br>AR 二维码延续体验</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sys-block">
+      <div class="sys-label">Content System</div>
+      <h2>内容系统</h2>
+      <div class="sys-desc">
+        五款香水 = 五套完整的感知语言。<br>
+        气质、意境、气息三层映射，缺一不可。
+      </div>
+      <table class="perfume-table">
+        <thead>
+          <tr>
+            <th>香水</th>
+            <th>人格气质</th>
+            <th>意境画面</th>
+            <th>气息激活效果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>昆仑煮雪</strong></td>
+            <td>清醒疏离</td>
+            <td>雪覆松径 + 冷光粒子</td>
+            <td>冰晶坠松枝</td>
+          </tr>
+          <tr>
+            <td><strong>颐和金桂</strong></td>
+            <td>温柔念旧</td>
+            <td>琉璃桂瓣 + 月晕扩散</td>
+            <td>琥珀滴落裹桂花</td>
+          </tr>
+          <tr>
+            <td><strong>踏云蔷薇</strong></td>
+            <td>甜美叛逆</td>
+            <td>灰玫瑰 + 烟缕缠绕</td>
+            <td>灰烬中绽红玫</td>
+          </tr>
+          <tr>
+            <td><strong>三重茶</strong></td>
+            <td>通透智慧</td>
+            <td>三色茶烟螺旋升腾</td>
+            <td>茶叶遇火泛金边</td>
+          </tr>
+          <tr>
+            <td><strong>黑松墨</strong></td>
+            <td>暗藏锋芒</td>
+            <td>墨锭裂金纹 + 松枝投影</td>
+            <td>墨锭崩裂涌松香</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="en-sub">Process</div>
+    <h2 style="font-family: var(--serif); font-size: clamp(28px,4vw,40px); letter-spacing: 3px; margin-bottom: 48px;">
+      关键流程
+    </h2>
+
+      <div class="process-timeline">
+        <div class="process-item">
+          <h3>研究品牌，定义命题</h3>
+          <p>观夏的核心是「东方美学的现代转译」——不是复古，是用传统意象建立当代共鸣。关键决策：用「人格测试」替代「产品展示」，降低认知门槛，增强用户卷入感。</p>
+          <div class="process-gallery">
+            <img src="assets/images/美学风格1.png" alt="美学风格1">
+            <img src="assets/images/美学风格2.png" alt="美学风格2">
+            <img src="assets/images/美学风格3.png" alt="美学风格3">
+            <img src="assets/images/美学风格4.png" alt="美学风格4">
+          </div>
+        </div>
+
+        <div class="process-item">
+          <h3>交互逻辑设计 · Figma</h3>
+          <p>在 Figma 中完成三轮问答的完整流程架构，三道题分别对应「气质 / 意境 / 气息」三个感知维度。关键决策：把「选择」变成「激活」，用手势而非点击，让身体参与进来。</p>
+          <div class="process-gallery" style="grid-template-columns: 1fr;">
+            <img src="assets/images/交互逻辑.png" alt="交互逻辑" style="width:100%; max-height:340px; object-fit:contain; background:var(--frost); aspect-ratio: auto;">
+          </div>
+        </div>
+
+        <div class="process-item">
+          <h3>TouchDesigner 视觉系统搭建</h3>
+          <p>在 TD 中分别建立五个场景，每套动效的触发时机、强度和节奏经过反复调试。核心难点：如何让动态视觉足够美，同时不破坏品牌的新中式克制感。</p>
+          <div class="process-gallery">
+            <img src="assets/images/动态海报1.png" alt="动态海报1">
+            <img src="assets/images/动态海报2.png" alt="动态海报2">
+          </div>
+        </div>
+
+      <div class="process-item">
+        <h3>周边物料设计</h3>
+        <p>试香卡 · 胸针 · AR 明信片：让装置体验在用户离场后继续延伸。试香卡提取观夏香水经典元素压纹印制；胸针将「气味人格」凝固为可佩戴的物件。</p>
+        <div class="process-gallery">
+          <img src="assets/images/试香卡-display.webp" alt="试香卡" loading="lazy" decoding="async">
+          <img src="assets/images/胸针-display.webp" alt="胸针" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="process-item">
+        <h3>测试与完成</h3>
+        <p>关注两件事：手势响应精度 + 三轮问答节奏感。参加第十九届「好创意」大赛，获广东赛区本科组交叉学科类三等奖。</p>
+        <div class="process-gallery">
+          <img src="assets/images/人1.png" alt="用户测试">
+          <img src="assets/images/人2.png" alt="用户测试">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- OUTCOME -->
+<section id="outcome">
+  <div class="section-inner">
+    <div class="en-sub">Outcome</div>
+    <h2>最终成果</h2>
+    <div class="outcome-lead">
+      五款香水，五种自我，五片东方天地。<br>
+      以下为装置最终效果与周边产出。
+    </div>
+
+    <div class="outcome-showcase">
+      <video
+        src="assets/images/观夏最终视频.mp4"
+        poster="assets/images/封面.png"
+        controls
+        playsinline>
+      </video>
+    </div>
+
+    <div class="outcome-grid">
+      <img src="assets/images/橱窗.png" alt="数字橱窗" loading="lazy" decoding="async">
+      <img src="assets/images/胸针-display.webp" alt="胸针" loading="lazy" decoding="async">
+      <img src="assets/images/试香卡-display.webp" alt="试香卡" loading="lazy" decoding="async">
+    </div>
+
+    <div class="award-section">
+      <div class="award-title">🏆 第十九届「好创意」· 广东赛区</div>
+      <div class="award-detail">本科组 · 交叉学科类 · 三等奖 · 2025.08.25</div>
+      <div class="award-detail" style="margin-top: 8px; font-size: 11px; opacity: 0.4;">证书编号 ZCS-19thgxfsq-02013</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- REFLECTION -->
+<section id="reflection">
+  <div class="section-inner">
+    <div class="en-sub">Reflection</div>
+    <h2>复盘</h2>
+
+    <div class="ref-block">
+      <h3>我的职责</h3>
+      <p>这个项目中，我主导了从交互逻辑到视觉实现的完整链路：在 Figma 中设计三轮问答的交互架构，在 TouchDesigner 中独立完成五套动态视觉的编程实现，同时负责主视觉的 TD 动态设计与制作，以及试香卡和胸针的设计产出。</p>
+    </div>
+
+    <div class="ref-block">
+      <h3>最大难点</h3>
+      <p>如何让动态视觉足够美，同时不破坏品牌的新中式克制感。<br><br>
+      TouchDesigner 的粒子系统天然倾向于「壮观」，但观夏的美学是克制的。最终的解法在三个维度上做减法：<br><br>
+      <strong>色彩与透明度</strong>——全篇只用低饱和度的邻近色或单色系，绝不出现高对比的艳丽色彩。粒子透明度被刻意提高，让它们始终若隐若现，作为背景存在。<br><br>
+      <strong>形态与尺寸</strong>——粒子形态只用最简单的圆点、细线、微小几何图形，尺寸变化范围极小，绝不出现突兀夸张的形变。<br><br>
+      <strong>运动规律</strong>——速度缓慢，匀速或带着优雅的缓动曲线，绝对避免快速、闪烁、弹跳等令人紧张的运动方式。</p>
+    </div>
+
+    <div class="ref-block">
+      <h3>复盘 · 如果重做</h3>
+      <ul>
+        <li>更早做用户测试——等程序完成才测试，发现手势精度问题时已没有足够时间大幅调整</li>
+        <li>更严格控制视觉辨识度边界——五套动效需要既统一又各自可辨识，昆仑煮雪和黑松墨的冷色系在快速浏览时仍有模糊地带</li>
+        <li>AR 体验闭环更完整——目前 AR 对应通用动态模板，如果能与用户香水人格进一步个性化，体验会更完整</li>
+      </ul>
+    </div>
+
+    <div class="ref-block">
+      <h3>后续优化方向</h3>
+      <p>这套「无形感知 → 可见表达」的系统框架，可以扩展到音乐、触感、情绪等更多感知场景。下一步想探索：引入真实嗅觉设备，让视觉与嗅觉同步激活，实现真正的多感官共鸣。</p>
+    </div>
+
+    <div style="margin-top: 64px; font-size: 12px; color: #aaa; letter-spacing: 2px; text-align: center;">
+      TO SUMMER · 深圳技术大学 · 2025
+    </div>
+  </div>
+</section>
+
+
+<script>
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.page-nav a');
+const progressBar = document.createElement('div');
+progressBar.className = 'progress-bar';
+document.body.prepend(progressBar);
+
+// ── Scroll progress + nav ──
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+
+  let current = '';
+  sections.forEach(sec => {
+    if (scrollTop >= sec.offsetTop - 300) {
+      current = sec.getAttribute('id');
+    }
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ── IntersectionObserver: section reveal ──
+const revealEls = document.querySelectorAll('.section-inner > *');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+revealEls.forEach(el => {
+  el.classList.add('fade-up');
+  observer.observe(el);
+});
+
+// ── Hero background parallax ──
+const heroBg = document.querySelector('.hero-bg');
+window.addEventListener('scroll', () => {
+  if (!heroBg) return;
+  const speed = 0.35;
+  heroBg.style.transform = 'translateY(' + (window.scrollY * speed) + 'px)';
+});
+
+const portfolioHome = document.querySelector('.portfolio-home');
+if (portfolioHome) {
+  portfolioHome.href = '../../index.html';
+}
+</script>
+
+</body>
+</html>
