@@ -9,12 +9,12 @@
       content="AI 视频实验项目页 — 围绕短片、镜头、气氛和动态视觉节奏展开的 AIGC 影像实验。"
     />
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./ai-video.css" />
-    <link rel="stylesheet" href="./header-overrides.css" />
+    <link rel="stylesheet" href="./ai-video/ai-video.css" />
+    <link rel="stylesheet" href="./ai-video/header-overrides.css" />
   </head>
   <body class="case-page">
     <header class="case-header">
-      <a class="case-brand portfolio-home" href="../../index.html" aria-label="返回作品集首页">
+      <a class="case-brand portfolio-home" href="./index.html" aria-label="返回作品集首页">
         <span>陈学成</span>
         <small>Portfolio Case Study</small>
       </a>
@@ -30,8 +30,8 @@
     <main>
       <!-- ═══ Hero ═══ -->
       <section class="case-hero" aria-labelledby="case-title">
-        <video class="case-hero-video" autoplay muted loop playsinline poster="./assets/ai/ai-generated-cover.jpg">
-          <source src="./assets/ai/ai-study-01.mp4" type="video/mp4" />
+        <video class="case-hero-video" autoplay muted loop playsinline poster="./ai-video/assets/ai/ai-generated-cover.jpg">
+          <source src="./ai-video/assets/ai/ai-study-01.mp4" type="video/mp4" />
         </video>
         <div class="case-hero-shade"></div>
         <div class="case-hero-copy">
@@ -103,7 +103,7 @@
           </div>
         </div>
         <figure class="concept-image">
-          <img src="./assets/ai/concept.png" alt="生成不是终点，剪辑才是叙事的开始" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <img src="./ai-video/assets/ai/concept.png" alt="生成不是终点，剪辑才是叙事的开始" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
         </figure>
       </section>
 
@@ -153,33 +153,39 @@
           <p class="section-index">04 Outcome</p>
           <h2 id="outcome-title">四组实验，四种影像气质</h2>
           <p>
-            从抽象视觉到叙事短片，每一段实验都在探索 AI 影像的不同可能性。
+            从抽象视觉到叙事短片，加上最新的心屿 APP 宣传视频，5 段实验探索 AI 影像的不同可能性。
           </p>
         </div>
         <div class="outcome-grid" aria-label="影像实验作品">
-          <div class="outcome-card" data-video="./assets/ai/ai-study-01.mp4" data-label="实验 01 · 抽象视觉" role="button" tabindex="0">
+          <div class="outcome-card" data-video="./ai-video/assets/ai/ai-study-01.mp4" data-label="实验 01 · 抽象视觉" role="button" tabindex="0">
             <div class="outcome-card-media">
-              <video src="./assets/ai/ai-study-01.mp4" muted playsinline preload="metadata"></video>
+              <video src="./ai-video/assets/ai/ai-study-01.mp4" muted playsinline preload="metadata"></video>
             </div>
             <div class="outcome-card-label">实验 01 · 抽象视觉</div>
           </div>
-          <div class="outcome-card" data-video="./assets/ai/ai-study-02.mp4" data-label="实验 02 · 气氛实验" role="button" tabindex="0">
+          <div class="outcome-card" data-video="./ai-video/assets/ai/ai-study-02.mp4" data-label="实验 02 · 气氛实验" role="button" tabindex="0">
             <div class="outcome-card-media">
-              <video src="./assets/ai/ai-study-02.mp4" muted playsinline preload="metadata"></video>
+              <video src="./ai-video/assets/ai/ai-study-02.mp4" muted playsinline preload="metadata"></video>
             </div>
             <div class="outcome-card-label">实验 02 · 气氛实验</div>
           </div>
-          <div class="outcome-card" data-video="./assets/ai/ai-study-03.mp4" data-label="实验 03 · 叙事短片" role="button" tabindex="0">
+          <div class="outcome-card" data-video="./ai-video/assets/ai/ai-study-03.mp4" data-label="实验 03 · 叙事短片" role="button" tabindex="0">
             <div class="outcome-card-media">
-              <video src="./assets/ai/ai-study-03.mp4" muted playsinline preload="metadata"></video>
+              <video src="./ai-video/assets/ai/ai-study-03.mp4" muted playsinline preload="metadata"></video>
             </div>
             <div class="outcome-card-label">实验 03 · 叙事短片</div>
           </div>
-          <div class="outcome-card" data-video="./assets/ai/ai-study-04.mp4" data-label="实验 04 · 最新创作" role="button" tabindex="0">
+          <div class="outcome-card" data-video="./ai-video/assets/ai/ai-study-04.mp4" data-label="实验 04 · 最新创作" role="button" tabindex="0">
             <div class="outcome-card-media">
-              <video src="./assets/ai/ai-study-04.mp4" muted playsinline preload="metadata"></video>
+              <video src="./ai-video/assets/ai/ai-study-04.mp4" muted playsinline preload="metadata"></video>
             </div>
             <div class="outcome-card-label">实验 04 · 最新创作</div>
+          </div>
+          <div class="outcome-card" data-video="./ai-video/assets/ai/心屿APP-AI宣传视频.mp4" data-label="实验 05 · 心屿宣传视频" role="button" tabindex="0">
+            <div class="outcome-card-media">
+              <video src="./ai-video/assets/ai/心屿APP-AI宣传视频.mp4" muted playsinline preload="metadata"></video>
+            </div>
+            <div class="outcome-card-label">实验 05 · 心屿宣传视频</div>
           </div>
         </div>
       </section>
